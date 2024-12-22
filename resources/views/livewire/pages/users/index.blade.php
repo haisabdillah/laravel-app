@@ -48,7 +48,7 @@ updating(['search' => fn () => $this->resetPage()]);
             <tbody>
                 @foreach ($this->dataTable as $item)
                 <tr>
-                    <th>
+                    <th scope="col">
                         {{$item->name}}
                     </th>
                     <td>
