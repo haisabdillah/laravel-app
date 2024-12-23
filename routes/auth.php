@@ -20,6 +20,8 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Volt::route('users', 'pages.users.index')->name('users.index');
+    Volt::route('users/create', 'pages.users.form')->name('users.create');
+    Volt::route('users/{user}/edit', 'pages.users.form')->name('users.edit');
     Volt::route('verify-email', 'pages.auth.verify-email')
         ->name('verification.notice');
 
