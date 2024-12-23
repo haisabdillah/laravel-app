@@ -24,17 +24,19 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased bg-base-50 dark:bg-base-900">
+        <div class="fixed top-2 right-2 z-[100]">
+         @if (session()->has('success'))
+            <x-toast :message="session('success')"/>
+         @endif
+           
+        </div>
+       
+        @include('layouts.header')
+        @livewire('sidebar')
+        <div class="p-4 sm:ml-64 mt-14">
+           
         
-
-@livewire('layout.header')
-
-@livewire('layout.sidebar')
-
-<div class="p-4 sm:ml-64 mt-14">
-   {{$slot}}
-   </div>
-   
-</div>
+            {{ $slot }}
     <script>
         var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
 var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');

@@ -52,6 +52,18 @@ $store = function(){
         <x-form-input wire:model="name" name="name" id="name" label="Name" required   />
         <x-form-input wire:model="email" name="email" id="email" label="Email" type="email" required  />
         <x-form-input wire:model="password" name="password" id="password" label="Password" type="password"  required={{!isset($data)}}  />
-        <x-primary-button type="submit">Save</x-primary-button>
+        <div class="flex space-x-2">
+            <a href="{{ route('users.index') }}" wire:navigate>
+                <x-secondary-button type="button"> <!-- Set a fixed width -->
+                    <i class="fa-solid fa-arrow-left me-2"></i>Cancel
+                </x-secondary-button>
+            </a>
+            <x-primary-button type="submit"> <!-- Set the same fixed width -->
+                <i class="fa-solid fa-floppy-disk me-2"></i>Save
+            </x-primary-button>
+        </div>
+
+        
+
     </form>
 </div>

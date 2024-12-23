@@ -1,16 +1,19 @@
 <?php
-use function Livewire\Volt\{layout,title,computed,state,usesPagination,with,updating};
+use function Livewire\Volt\{layout,title,computed,state,usesPagination,updating};
 use App\Models\User;
+
 usesPagination();
+
 layout('layouts.app');
+
 title('Users');
 
-state(['search' => '','cursor' => ''])->url();
+state(['search' => ''])->url();
 
 $dataTable = computed(function () {
     return User::when($this->search, function($q) {
     $q->where('name', 'like', '%'.$this->search.'%')
-    ->orWhere('email', 'like', '%'.$this->search.'%');
+      ->orWhere('email', 'like', '%'.$this->search.'%');
     })->orderByDesc('id')->paginate(10);
 });
 
@@ -19,6 +22,7 @@ updating(['search' => fn () => $this->resetPage()]);
 $delete = function($id){
     User::find($id)->delete();
     session()->flash('success', 'User deleted successfully');
+    $this->dispatch('close-modal-delete');
 };
  
 
@@ -26,7 +30,7 @@ $delete = function($id){
 
 <div class="container">
     <div class="flex w-full justify-between items-center mb-4">
-        <x-primary-button href="{{route('users.create')}}" wire:navigate >Create</x-primary-button>
+        <x-primary-button href="{{route('users.create')}}" wire:navigate > <i class="fa-solid fa-plus me-2"></i> Add User</x-primary-button>
         <x-search-input wire:model.live="search" :value="$search"></x-search-input>
     </div>
     <div class="relative overflow-x-auto">
@@ -67,7 +71,7 @@ $delete = function($id){
                     </td>
                     <td clas="flex items-center space-x-2">
                         <x-action-edit href="{{route('users.edit',$item->id)}}" wire:navigate></x-action-edit>
-                        <x-action-delete wire:click="delete({{$item->id}})"></x-action-delete>
+                        <x-action-delete x-bind="modalDeleteButton" data-route="delete" data-id="{{$item->id}}"></x-action-delete>
                     </td>
                 </tr>
                 @endforeach
@@ -78,4 +82,6 @@ $delete = function($id){
      <div class="mt-4">
         {{ $this->dataTable->links() }} <!-- This renders pagination links -->
     </div>
+
+    <x-modal-delete></x-modal-delete>
 </div>
