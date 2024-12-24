@@ -1,26 +1,28 @@
 <?php
-use function Livewire\Volt\{layout,state,title,rules,mount};
 use App\Models\User;
 
-layout('layouts.app');
-title(fn()=> $this->title);
+use function Livewire\Volt\layout;
+use function Livewire\Volt\mount;
+use function Livewire\Volt\rules;
+use function Livewire\Volt\state;
+use function Livewire\Volt\title;
 
+layout('layouts.app');
+title(fn () => $this->title);
 
 //Form State
-state(['data','name' => '','email' => '','password' => '','status'=> '']);
+state(['data', 'name' => '', 'email' => '', 'password' => '', 'status' => '']);
 state(['title' => 'Add User']);
 
 //Select State
-state(['selectStatus' => [0=>'Inactive',1=>'Active']]);
+state(['selectStatus' => [0 => 'Inactive', 1 => 'Active']]);
 
-
-rules(fn()=> [
+rules(fn () => [
     'name' => 'required|string|max:30',
     'email' => 'required|email|max:30|unique:users'.($this->data ? ',email,'.$this->data->id : ''),
-    'password' => ($this->data ? 'nullable' : 'required' ).'|string|min:8',
-    'status' => 'required|boolean'
+    'password' => ($this->data ? 'nullable' : 'required').'|string|min:8',
+    'status' => 'required|boolean',
 ]);
-
 
 mount(function ($user = null) {
     if ($user) {
@@ -33,20 +35,18 @@ mount(function ($user = null) {
     }
 });
 
-$store = function(){
+$store = function () {
     $validate = $this->validate();
     $validate['password'] = $validate['password'] ? bcrypt($validate['password']) : $this->data->password;
     if ($this->data) {
         $this->data->update($validate);
         session()->flash('success', 'User updated successfully');
-    }
-    else {
+    } else {
         User::create($validate);
         session()->flash('success', 'User created successfully');
     }
-    $this->redirectRoute('users.index',navigate:true);
+    $this->redirectRoute('users.index', navigate: true);
 }
-
 
 ?>
 <div>
@@ -67,9 +67,6 @@ $store = function(){
                     <i class="fa-solid fa-floppy-disk me-2"></i>Save
                 </x-primary-button>
             </div>
-    
-            
-    
         </form>
     </div>
 </div>

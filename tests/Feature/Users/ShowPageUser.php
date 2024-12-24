@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Livewire\Volt\Volt;
 
 test('users screen can be rendered', function () {
@@ -11,7 +10,6 @@ test('users screen can be rendered', function () {
         ->assertOk()
         ->assertSeeVolt('pages.users.index');
 });
-
 
 test('search input', function () {
     $this->actingAs(superAdmin());

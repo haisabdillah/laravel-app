@@ -1,34 +1,38 @@
 <?php
-use function Livewire\Volt\{layout,title,computed,state,usesPagination,updating};
 use App\Models\User;
+
+use function Livewire\Volt\computed;
+use function Livewire\Volt\layout;
+use function Livewire\Volt\state;
+use function Livewire\Volt\title;
+use function Livewire\Volt\updating;
+use function Livewire\Volt\usesPagination;
 
 usesPagination();
 
 layout('layouts.app');
 
-title(fn()=> $this->title);
+title(fn () => $this->title);
+state(['title' => 'Users',
+    'breadcrumbs' => [['url' => '#', 'label' => 'Users', 'icon' => false, 'current' => true]],
+]);
 
 state(['search' => ''])->url();
-state(['title' => 'Users',
-       'breadcrumbs' => [['url' => '#', 'label' => 'Users', 'icon' => false,'current' => true]]
-        ]);
-
 
 $dataTable = computed(function () {
-    return User::when($this->search, function($q) {
-    $q->where('name', 'like', '%'.$this->search.'%')
-      ->orWhere('email', 'like', '%'.$this->search.'%');
+    return User::when($this->search, function ($q) {
+        $q->where('name', 'like', '%'.$this->search.'%')
+            ->orWhere('email', 'like', '%'.$this->search.'%');
     })->orderByDesc('id')->paginate(10);
 });
 
 updating(['search' => fn () => $this->resetPage()]);
 
-$delete = function($id){
+$delete = function ($id) {
     User::find($id)->delete();
     session()->flash('success', 'User deleted successfully');
     $this->dispatch('close-modal-delete');
 };
- 
 
 ?>
 <div>

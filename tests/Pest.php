@@ -2,7 +2,6 @@
 
 use App\Models\User;
 
-
 /*
 |--------------------------------------------------------------------------
 | Test Case
@@ -46,7 +45,5 @@ expect()->extend('toBeOne', function () {
 
 function superAdmin()
 {
-    return  User::factory()->create();
+    return User::factory()->create();
 }
-
-

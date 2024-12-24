@@ -21,6 +21,7 @@ class Sidebar extends Component
                 'icon' => 'fa-users',
             ],
         ];
-        return view('layouts.sidebar',['navlinks' => $navlinks]);
+
+        return view('layouts.sidebar', ['navlinks' => $navlinks]);
     }
 }
