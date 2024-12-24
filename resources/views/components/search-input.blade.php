@@ -8,6 +8,6 @@
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
             </svg>
         </div>
-        <input type="search" {{$attributes->merge(["class" => 'block w-full  ps-10 text-sm text-gray-900 border border-base-300 rounded-lg bg-base-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-base-700 dark:border-base-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'])}} id="default-search" placeholder="{{$placeholder}}"/>
+        <input type="search" {{$attributes->merge(["class" => 'block w-full max-h-[34px]  ps-10 text-sm text-gray-900 border border-base-300 rounded-md bg-base-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-base-700 dark:border-base-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'])}} id="default-search" placeholder="{{$placeholder}}"/>
     </div>
 </div>

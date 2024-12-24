@@ -2,7 +2,6 @@
 use App\Models\User;
 
 use function Livewire\Volt\computed;
-use function Livewire\Volt\layout;
 use function Livewire\Volt\state;
 use function Livewire\Volt\title;
 use function Livewire\Volt\updating;
@@ -10,13 +9,10 @@ use function Livewire\Volt\usesPagination;
 
 usesPagination();
 
-layout('layouts.app');
 
 title(fn () => $this->title);
-state(['title' => 'Users',
-    'breadcrumbs' => [['url' => '#', 'label' => 'Users', 'icon' => false, 'current' => true]],
-]);
 
+state(['title' => 'Users']);
 state(['search' => ''])->url();
 
 $dataTable = computed(function () {
@@ -36,13 +32,13 @@ $delete = function ($id) {
 
 ?>
 <div>
-    <x-layout.header-page title="Users" :breadcrumbs="$breadcrumbs">
+    <x-layout.header-page title="{{$title}}" :breadcrumbs="[['url' => '#', 'label' => 'Users', 'icon' => false, 'current' => true]]">
         <div class="flex h-full justify-end space-x-2 items-end mb-4">
             <x-primary-button href="{{route('users.create')}}" wire:navigate > <i class="fa-solid fa-plus me-2"></i> Add User</x-primary-button>
             <x-search-input wire:model.live="search" :value="$search"></x-search-input>
         </div>
     </x-layout.header-page>
-    <div class="container">
+   
         <div class="relative overflow-x-auto">
             <table class="table">
                 <thead>
@@ -92,7 +88,6 @@ $delete = function ($id) {
          <div class="mt-4">
             {{ $this->dataTable->links() }} <!-- This renders pagination links -->
         </div>
+        <x-modal.delete></x-modal.delete>
     
-        <x-modal-delete></x-modal-delete>
-    </div>
 </div>

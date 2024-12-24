@@ -1,6 +1,6 @@
 @props(['title', 'breadcrumbs' => []])
 
-<div class="contaner w-full pb-6 pt-4">
+<div class="contaner w-full flex-wrap pb-6 pt-4">
     <div class="flex">
         <div>
             <h2 class="mb-4 font-extrabold leading-none tracking-tight text-gray-900 text-[25.888px] dark:text-white">{{$title}}</h2>

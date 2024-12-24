@@ -1,13 +1,10 @@
 <?php
 use App\Models\User;
-
-use function Livewire\Volt\layout;
 use function Livewire\Volt\mount;
 use function Livewire\Volt\rules;
 use function Livewire\Volt\state;
 use function Livewire\Volt\title;
 
-layout('layouts.app');
 title(fn () => $this->title);
 
 //Form State
@@ -53,10 +50,10 @@ $store = function () {
     <x-layout.header-page :title="$title" :breadcrumbs="[['url' => route('users.index'), 'label' => 'Users', 'icon' => false],['url' => '', 'label' => $title, 'icon' => false,'current' => true]]"/>
     <div class="container">
         <form class="max-w-md" wire:submit.prevent="store">
-            <x-form-select wire:model="status" name="status" id="status" label="Status" :options="$selectStatus" required />
-            <x-form-input wire:model="name" name="name" id="name" label="Name" required   />
-            <x-form-input wire:model="email" name="email" id="email" label="Email" type="email" required  />
-            <x-form-input wire:model="password" name="password" id="password" label="Password" type="password"  required={{!isset($data)}}  />
+            <x-form.select wire:model="status" name="status" id="status" label="Status" :options="$selectStatus" required />
+            <x-form.input wire:model="name" name="name" id="name" label="Name" required   />
+            <x-form.input wire:model="email" name="email" id="email" label="Email" type="email" required  />
+            <x-form.input wire:model="password" name="password" id="password" label="Password" type="password"  required={{!isset($data)}}  />
             <div class="flex space-x-2">
                 <a href="{{ route('users.index') }}" wire:navigate>
                     <x-secondary-button type="button"> <!-- Set a fixed width -->

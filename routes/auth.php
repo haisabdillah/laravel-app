@@ -19,6 +19,10 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Volt::route('roles', 'pages.roles.index')->name('roles.index');
+    Volt::route('roles/create', 'pages.roles.form')->name('roles.create');
+    Volt::route('roles/{role}/edit', 'pages.roles.form')->name('roles.edit');
+
     Volt::route('users', 'pages.users.index')->name('users.index');
     Volt::route('users/create', 'pages.users.form')->name('users.create');
     Volt::route('users/{user}/edit', 'pages.users.form')->name('users.edit');
