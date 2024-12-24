@@ -33,11 +33,10 @@
        
         @include('layouts.header')
         @livewire('sidebar')
-        <div class="p-4 sm:ml-64 mt-14">
-           
-        
+        <div class="p-4 sm:ml-64 mt-16">
+            
             {{ $slot }}
-    <script>
+        <script>
         var themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
 var themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
 
