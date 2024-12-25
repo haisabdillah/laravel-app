@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
+use App\Models\User;
 
 class GeneratePermission extends Command
 {
@@ -26,6 +27,7 @@ class GeneratePermission extends Command
      */
     public function handle()
     {
+
         Role::updateOrCreate(['name' => 'superadmin'], ['name' => 'superadmin']);
         $permissions = [
             "users",
@@ -37,6 +39,16 @@ class GeneratePermission extends Command
                 $permissionName = "{$value}.{$action}";
                 \Spatie\Permission\Models\Permission::updateOrCreate(['name' => $permissionName], ['name' => $permissionName]);
             }
+        }
+
+        $user = User::where('email','admin@admin.com')->first();
+        if (!$user) {
+           $user =  User::factory()->create([
+                'email' => 'admin@admin.com',
+                'password' => bcrypt('admin'),
+                'status' => 1,
+            ]);
+            $user->syncRoles('superadmin');
         }
     }
 }

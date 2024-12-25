@@ -10,10 +10,15 @@ use Illuminate\Support\Arr;
 title(fn () => $this->title);
 state(['title' => 'Add User']);
 
+//Permission State
+state([
+    'authCanCreate' => auth()->user()->can('users.create'),
+    'authCanEdit' => auth()->user()->can('users.edit'),
+]);
+
 
 //Form State
 state(['data', 'name', 'email', 'password', 'status','role']);
-
 
 //Select State
 state(['selectStatus' => [0 => 'Inactive', 1 => 'Active'],
@@ -30,6 +35,7 @@ rules(fn () => [
 
 mount(function ($user = null) {
     if ($user) {
+        abort_if(!$this->authCanEdit, 403);
         $user = User::with('roles')->find($user);
         $this->title = 'Edit User';
         $this->data = $user;
@@ -37,6 +43,9 @@ mount(function ($user = null) {
         $this->email = $user->email;
         $this->status = $user->status;
         $this->role = $user->getRoleNames()[0] ?? null;
+    }
+    else {
+        abort_if(!$this->authCanCreate, 403);
     }
 });
 

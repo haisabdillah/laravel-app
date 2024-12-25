@@ -9,6 +9,8 @@
                 'name' => 'Users',
                 'route' => 'users.index',
                 'icon' => 'fa-users',
+                'permission' => 'users.view',
+
             ],
             [
                 'name' => 'Roles',

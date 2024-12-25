@@ -6,6 +6,12 @@ use function Livewire\Volt\rules;
 use function Livewire\Volt\state;
 use function Livewire\Volt\title;
 
+//Permission State
+state([
+    'authCanCreate' => auth()->user()->can('roles.create'),
+    'authCanEdit' => auth()->user()->can('roles.edit'),
+]);
+
 title(fn () => $this->title);
 
 //Form State
@@ -19,10 +25,13 @@ rules(fn () => [
 
 mount(function ($role = null) {
     if ($role) {
+        abort_if(!$this->authCanEdit, 403);
         $role = Role::find($role);
         $this->title = 'Edit Role';
         $this->data = $role;
         $this->name = $role->name;
+    }else{
+        abort_if(!$this->authCanCreate, 403);
     }
 });
 

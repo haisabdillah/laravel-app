@@ -1,18 +1,24 @@
 <?php
 use App\Models\User;
-
 use function Livewire\Volt\computed;
 use function Livewire\Volt\state;
 use function Livewire\Volt\title;
-use function Livewire\Volt\uses;
+use function Livewire\Volt\mount;
 use function Livewire\Volt\updating;
 use function Livewire\Volt\usesPagination;
-
 usesPagination();
-
 
 title(fn () => $this->title);
 
+//Permission State
+state([
+    'authCanView' => auth()->user()->can('users.view'),
+    'authCanEdit' => auth()->user()->can('users.edit'),
+    'authCanCreate' => auth()->user()->can('users.create'),
+    'authCanDelete' => auth()->user()->can('users.delete'),
+]);
+
+mount(fn()=> abort_if(!$this->authCanView, 403) );
 state(['title' => 'Users']);
 state(['search' => ''])->url();
 
@@ -26,7 +32,7 @@ $dataTable = computed(function () {
 updating(['search' => fn () => $this->resetPage()]);
 
 $delete = function ($id) {
-    $this->hasPermission('users.delete');
+    abort_if(!$this->authCanDelete, 403);
     User::find($id)->delete();
     session()->flash('success', 'User deleted successfully');
     $this->dispatch('close-modal-delete');
@@ -36,11 +42,12 @@ $delete = function ($id) {
 <div>
     <x-layout.header-page title="{{$title}}" :breadcrumbs="[['url' => '#', 'label' => 'Users', 'icon' => false, 'current' => true]]">
         <div class="flex h-full justify-end space-x-2 items-end mb-4">
-            <x-primary-button href="{{route('users.create')}}" wire:navigate > <i class="fa-solid fa-plus me-2"></i> Add User</x-primary-button>
+            @if ($authCanCreate)
+                <x-primary-button href="{{route('users.create')}}" wire:navigate > <i class="fa-solid fa-plus me-2"></i> Add User</x-primary-button>
+            @endif
             <x-search-input wire:model.live="search" :value="$search"></x-search-input>
         </div>
     </x-layout.header-page>
-   
         <div class="relative overflow-x-auto">
             <table class="table">
                 <thead>
@@ -78,12 +85,12 @@ $delete = function ($id) {
                            <x-badge color="{{$item->status ? 'green' : 'gray'}}">{{$item->status ? "Active" : "Deactive"}}</x-badge>
                         </td>
                         <td clas="flex items-center space-x-2">
-                            @can('users.edit')
+                           @if ($authCanEdit)
                             <x-action-edit href="{{route('users.edit',$item->id)}}" wire:navigate></x-action-edit>
-                            @endcan
-                           
-                                <x-action-delete x-bind="modalDeleteButton" data-route="delete" data-id="{{$item->id}}"></x-action-delete> 
-                           
+                           @endif
+                           @if ($authCanDelete)
+                            <x-action-delete x-bind="modalDeleteButton" data-route="delete" data-id="{{$item->id}}"></x-action-delete> 
+                           @endif
                         </td>
                     </tr>
                     @endforeach
