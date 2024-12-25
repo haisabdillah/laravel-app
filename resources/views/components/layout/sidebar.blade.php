@@ -4,7 +4,6 @@
                 'name' => 'Dashboard',
                 'route' => 'dashboard',
                 'icon' => 'fa-gauge',
-
             ],
             [
                 'name' => 'Users',
@@ -14,6 +13,7 @@
             [
                 'name' => 'Roles',
                 'route' => 'roles.index',
+                'permission' => 'roles.view',
                 'icon' => 'fa-key',
             ],
         ];
@@ -22,12 +22,23 @@
    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-base-800">
       <ul class="space-y-2 font-medium">
          @foreach ($navlinks as $item)
+         @if (isset($item['permission']))
+            @can($item['permission'])
+            <li>
+               <a href="{{route($item['route'])}}" wire:navigate class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-base-100 dark:hover:bg-base-700 group">
+                  <i class="fa-solid {{$item['icon']}}"></i>
+                  <span class="ms-3">{{$item['name']}}</span>
+               </a>
+            </li>
+            @endcan
+         @else
          <li>
             <a href="{{route($item['route'])}}" wire:navigate class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-base-100 dark:hover:bg-base-700 group">
                <i class="fa-solid {{$item['icon']}}"></i>
                <span class="ms-3">{{$item['name']}}</span>
             </a>
          </li>
+         @endif
          @endforeach
         
       </ul>

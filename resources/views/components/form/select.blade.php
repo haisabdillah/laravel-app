@@ -1,6 +1,6 @@
 @props(['id', 'name', 'label', 'options', 'selected' => '', 'class' => '', 'placeholder' => null, 'required' => false])
 
-<div class="mb-5">
+<div class="mb-5 max-w-full">
     <label for="{{ $id }}" class="block mb-2 text-sm font-medium text-base-900 dark:text-white">{{ $label }} {{$required ? '*' : null}}</label>
     <select id="{{ $id }}" name="{{ $name }}  @if($required) required @endif  @if($errors->has($name)) autofocus @endif"
             {{ $attributes->merge([

@@ -25,8 +25,12 @@ table.table thead tr th{
     @apply px-6 py-3;
 }
 
-table.table tbody tr{
+table.table tbody tr:not(:last-child){
     @apply bg-white border-b dark:bg-base-800 dark:border-base-700;
+}
+
+table.table tbody tr:last-child{
+    @apply bg-white dark:bg-base-800;
 }
 
 table.table tbody tr td{

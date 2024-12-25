@@ -4,6 +4,7 @@ use App\Models\User;
 use function Livewire\Volt\computed;
 use function Livewire\Volt\state;
 use function Livewire\Volt\title;
+use function Livewire\Volt\uses;
 use function Livewire\Volt\updating;
 use function Livewire\Volt\usesPagination;
 
@@ -16,7 +17,7 @@ state(['title' => 'Users']);
 state(['search' => ''])->url();
 
 $dataTable = computed(function () {
-    return User::when($this->search, function ($q) {
+    return User::with('roles')->when($this->search, function ($q) {
         $q->where('name', 'like', '%'.$this->search.'%')
             ->orWhere('email', 'like', '%'.$this->search.'%');
     })->orderByDesc('id')->paginate(10);
@@ -25,6 +26,7 @@ $dataTable = computed(function () {
 updating(['search' => fn () => $this->resetPage()]);
 
 $delete = function ($id) {
+    $this->hasPermission('users.delete');
     User::find($id)->delete();
     session()->flash('success', 'User deleted successfully');
     $this->dispatch('close-modal-delete');
@@ -70,14 +72,18 @@ $delete = function ($id) {
                             {{$item->email}}
                         </td>
                         <td>
-                            -
+                            {{$item->getRoleNames()[0] ?? '-'}}
                         </td>
                         <td>
                            <x-badge color="{{$item->status ? 'green' : 'gray'}}">{{$item->status ? "Active" : "Deactive"}}</x-badge>
                         </td>
                         <td clas="flex items-center space-x-2">
+                            @can('users.edit')
                             <x-action-edit href="{{route('users.edit',$item->id)}}" wire:navigate></x-action-edit>
-                            <x-action-delete x-bind="modalDeleteButton" data-route="delete" data-id="{{$item->id}}"></x-action-delete>
+                            @endcan
+                           
+                                <x-action-delete x-bind="modalDeleteButton" data-route="delete" data-id="{{$item->id}}"></x-action-delete> 
+                           
                         </td>
                     </tr>
                     @endforeach
