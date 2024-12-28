@@ -11,12 +11,11 @@ layout('components.layout.guest');
 form(LoginForm::class);
 
 $login = function () {
-    $this->validate();
 
+    $this->validate();
     $this->form->authenticate();
 
     Session::regenerate();
-
     $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
 };
 
