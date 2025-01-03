@@ -6,15 +6,15 @@
 
 
 .container{
-    @apply p-4 text-gray-900 dark:text-white bg-white dark:bg-base-800  rounded-lg ;
+    @apply p-4  bg-white dark:bg-base-800  rounded-lg ;
 }
 
 table.table{
-    @apply w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 ;
+    @apply w-full text-sm text-left rtl:text-right   ;
 }
 
 table.table thead{
-    @apply text-xs text-gray-700 uppercase bg-base-50 dark:bg-base-700 dark:text-gray-400 ;
+    @apply text-xs uppercase  bg-base-50 dark:bg-base-700 ;
 }
 
 table.table thead tr th{

@@ -23,7 +23,7 @@
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-base-50 dark:bg-base-900">
+    <body class="font-sans antialiased bg-base-200 dark:bg-base-900 text-base-700 dark:text-base-200">
         <div class="fixed top-2 right-2 z-[100]">
          @if (session()->has('success'))
             <x-toast :message="session('success')"/>

@@ -43,7 +43,7 @@ $delete = function ($id) {
     <x-layout.header-page title="{{$title}}" :breadcrumbs="[['url' => '#', 'label' => 'Users', 'icon' => false, 'current' => true]]">
         <div class="flex h-full justify-end space-x-2 items-end mb-4">
             @if ($authCanCreate)
-                <x-primary-button href="{{route('users.create')}}" wire:navigate > <i class="fa-solid fa-plus me-2"></i> Add User</x-primary-button>
+                <x-primary-button type="button" href="{{route('users.create')}}" wire:navigate > <i class="fa-solid fa-plus me-2"></i> Add User</x-primary-button>
             @endif
             <x-search-input wire:model.live="search" :value="$search"></x-search-input>
         </div>
@@ -89,7 +89,7 @@ $delete = function ($id) {
                             <x-action-edit href="{{route('users.edit',$item->id)}}" wire:navigate></x-action-edit>
                            @endif
                            @if ($authCanDelete)
-                            <x-action-delete x-bind="modalDeleteButton" data-route="delete" data-id="{{$item->id}}"></x-action-delete> 
+                            <x-action-delete type="button" x-bind="modalDeleteButton" data-route="delete" data-id="{{$item->id}}"></x-action-delete> 
                            @endif
                         </td>
                     </tr>
@@ -101,6 +101,6 @@ $delete = function ($id) {
          <div class="mt-4">
             {{ $this->dataTable->links() }} <!-- This renders pagination links -->
         </div>
-        <x-modal.delete></x-modal.delete>
+        <x-modal.delete/>
     
 </div>

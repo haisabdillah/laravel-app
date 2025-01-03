@@ -27,7 +27,7 @@
          @if (isset($item['permission']))
             @can($item['permission'])
             <li>
-               <a href="{{route($item['route'])}}" wire:navigate class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-base-100 dark:hover:bg-base-700 group">
+               <a href="{{route($item['route'])}}" wire:navigate class="flex items-center p-2 rounded-lg  hover:bg-base-100 dark:hover:bg-base-700 group">
                   <i class="fa-solid {{$item['icon']}}"></i>
                   <span class="ms-3">{{$item['name']}}</span>
                </a>
@@ -35,7 +35,7 @@
             @endcan
          @else
          <li>
-            <a href="{{route($item['route'])}}" wire:navigate class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-base-100 dark:hover:bg-base-700 group">
+            <a href="{{route($item['route'])}}" wire:navigate class="flex items-center p-2 rounded-lg  hover:bg-base-100 dark:hover:bg-base-700 group">
                <i class="fa-solid {{$item['icon']}}"></i>
                <span class="ms-3">{{$item['name']}}</span>
             </a>

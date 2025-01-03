@@ -94,7 +94,7 @@
   </a>
 </div> -->
 
-<x-dropdown align="right" width="min-w-64">
+<x-dropdown align="right" width="min-w-64" contentClasses="max-h-80 overflow-y-auto bg-white dark:bg-base-700">
 <x-slot name="trigger">
     <button class="flex items-center text-sm font-medium text-center text-gray-500 hover:text-gray-900 focus:outline-none dark:hover:text-white dark:text-gray-400">
         <svg width="20px" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -105,11 +105,11 @@
         @endif
     </button>
 </x-slot>
-<x-slot name="content">
+<x-slot name="content" >
     @foreach (auth()->user()->notifications as $notification )
         <x-dropdown-link href="#">
             <div class="w-full ps-3">
-                <div class="flex justify-between items-center font-semibold text-gray-900 dark:text-white">
+                <div class="flex justify-between items-center font-semibold text-base-800 dark:text-white">
                     <span>{{$notification->data['title']}}</span>
                     @if(!$notification->read_at)
                         <div class="w-2 h-2 bg-blue-500 rounded-full"></div>
